@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.MemberMapper">
+    <!--注册会员,添加对象-->
+    <insert id="add" parameterType="member">
+        <selectKey keyProperty="id" order="AFTER" resultType="int">
+            select LAST_INSERT_ID();
+        </selectKey>
+        insert into t_member values (#{id},#{fileNumber},#{name},#{sex},#{idCard},#{phoneNumber},#{regTime},
+        #{password},#{email},#{birthday},#{remark})
+    </insert>
+
+    <!--根据手机号查询对象-->
+    <select id="findByTelephone" parameterType="string" resultType="member">
+        select * from t_member where phoneNumber=#{phoneNumber}
+    </select>
+
+</mapper>

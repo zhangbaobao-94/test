@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.OrdersettingMapper">
+    <!--通过日期查找对象-->
+    <select id="findByOrderDate" resultType="ordersetting" parameterType="date">
+        select * from t_ordersetting where orderDate=#{orderDate}
+    </select>
+
+    <!--更新对象-->
+    <update id="update" parameterType="ordersetting">
+        update t_ordersetting set number=#{number} where orderDate=#{orderDate}
+    </update>
+
+    <!--添加对象-->
+    <insert id="insert" parameterType="ordersetting">
+        insert into t_ordersetting(orderDate,number) values (#{orderDate},#{number})
+    </insert>
+
+    <select id="findByDate" parameterType="map" resultType="ordersetting">
+        select * from t_ordersetting where orderDate between #{start} and #{end}
+    </select>
+
+    <!--根据orderDate查询对象-->
+    <select id="findDate" resultType="ordersetting" parameterType="date">
+        select * from t_ordersetting where orderDate=#{orderDate}
+    </select>
+    <!--预约成功后,更新表格,即reservations+1-->
+    <update id="updateReservations" parameterType="ordersetting">
+        update t_ordersetting set reservations=#{reservations} where orderDate=#{orderDate}
+    </update>
+</mapper>

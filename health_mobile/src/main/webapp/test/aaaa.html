@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../img/asset-favico.ico">
+    <title>编辑信息</title>
+    <link rel="stylesheet" href="../css/page-health-orderInfo.css"/>
+    <link rel="stylesheet" href="../plugins/elementui/index.css"/>
+    <script src="../plugins/jquery/dist/jquery.min.js"></script>
+    <script src="../plugins/healthmobile.js"></script>
+    <script src="../plugins/datapicker/datePicker.js"></script>
+    <script src="../plugins/vue/vue.js"></script>
+    <script src="../plugins/vue/axios-0.18.0.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+
+</head>
+<div id="app">
+    <input type="text">
+    <input type="button" :value="message" @click="sendMessage()" id="btn">
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            message: '发送验证码',
+            second: 3
+        },
+        methods: {
+            sendMessage() {
+                var time = window.setInterval(() => {
+                    $("#btn").attr("disabled", true);
+                    if (this.second > 0) {
+                        this.message = (this.second--) + 's后重新获取';
+                    } else {
+                        this.second = 3;
+                        this.message = '重新获取';
+                        window.clearInterval(time);
+                        $("#btn").attr("disabled", false);
+                    }
+                }, 1000);
+            }
+        }
+    });
+</script>
+</body>
+</html>

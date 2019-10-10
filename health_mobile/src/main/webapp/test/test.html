@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../img/asset-favico.ico">
+    <title>编辑信息</title>
+    <link rel="stylesheet" href="../css/page-health-orderInfo.css"/>
+    <link rel="stylesheet" href="../plugins/elementui/index.css"/>
+    <script src="../plugins/jquery/dist/jquery.min.js"></script>
+    <script src="../plugins/healthmobile.js"></script>
+    <script src="../plugins/datapicker/datePicker.js"></script>
+    <script src="../plugins/vue/vue.js"></script>
+    <script src="../plugins/vue/axios-0.18.0.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+
+</head>
+<body data-spy="scroll" data-target="#myNavbar" data-offset="150">
+<div id="app" class="app">
+
+    <input v-model="orderInfo.telephone" type="text" class="input-clear" placeholder="请输入手机号">
+    <input style="font-size: x-small;" id="validateCodeButton" @click="sendValidateCode()" type="button"
+           :value="message">
+
+</div>
+<script>
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            second: 3,
+            message: '发送验证码',
+            flag: true
+        },
+        methods: {
+            //发送验证码
+            sendValidateCode() {
+                // if (this.flag) {
+                //     window.setInterval(()=>{
+                //         this.message=(this.second--)+"s秒后重新获取";
+                //     },1000)
+                // }
+            },
+            //提交预约
+            submitOrder() {
+            }
+        },
+        mounted() {
+        }
+    });
+</script>
+
+</body>
+</html>

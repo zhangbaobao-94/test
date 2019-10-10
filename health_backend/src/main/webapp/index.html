@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:el-table="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <!--引入ElementUI样式-->
+    <link rel="stylesheet" href="js/index.css">
+    <script src="js/vue.js"></script>
+    <!-- 引入ElementUI组件库 -->
+    <script src="js/index.js"></script>
+    <script src="js/axios-0.18.0.js"></script>
+
+</head>
+<body>
+
+
+<div id="app">
+
+    <el-table
+            :data="list"
+            style="width: 100%">
+        <el-table-column
+                prop="id"
+                label="编号"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="name"
+                label="姓名"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="birthday"
+                label="生日">
+        </el-table-column>
+        <el-table-column
+                prop="salary"
+                label="薪水">
+        </el-table-column>
+    </el-table>
+
+</div>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            list:[]
+        },
+        mounted(){
+            axios.get('/person/findAll.do').then((res)=>{
+                this.list=res.data.data;
+            })
+        }
+    });
+</script>
+
+</body>
+</html>

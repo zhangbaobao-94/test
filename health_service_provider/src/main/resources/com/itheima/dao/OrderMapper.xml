@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.OrderMapper">
+    <!--根据orderDate,setmealId,member_Id判断是否已经预约-->
+    <select id="isOrder" resultType="long" parameterType="order">
+        select count(id) from t_order where member_id=#{memberId} and
+         orderDate=#{orderDate} and setmeal_id=#{setmealId}
+    </select>
+
+    <!--预约操作,即在t_order中添加对象-->
+    <insert id="add" parameterType="order">
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID();
+        </selectKey>
+        insert into t_order values (#{id},#{memberId},#{orderDate},#{orderType},#{orderStatus},#{setmealId})
+    </insert>
+
+    <!--根据order表的id值查询相关联表的值-->
+    <select id="findAllBy" resultType="map" parameterType="int">
+        select
+            (select name from t_member where id=member_id) member,
+            (select name from t_setmeal where id=setmeal_id) setmeal,
+            orderDate,
+            orderType
+        from
+            t_order
+        where id=#{id}
+    </select>
+</mapper>
