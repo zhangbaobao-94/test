@@ -87,29 +87,12 @@
         </resultMap>
 -->
 
-  <!--  &lt;!&ndash;根据套餐的id进行多表查询&ndash;&gt;
-    <select id="findAllById" parameterType="int" resultMap="findByResultMap">
-        select * from t_setmeal where id=#{id}
-    </select>-->
+    <!--  &lt;!&ndash;根据套餐的id进行多表查询&ndash;&gt;
+      <select id="findAllById" parameterType="int" resultMap="findByResultMap">
+          select * from t_setmeal where id=#{id}
+      </select>-->
 
-   <!-- <resultMap id="findByResultMap" type="setmeal">
-        <id property="id" column="id"></id>
-        <result column="name" property="name"></result>
-        <result column="code" property="code"/>
-        <result column="helpCode" property="helpCode"/>
-        <result column="sex" property="sex"/>
-        <result column="age" property="age"/>
-        <result column="price" property="price"/>
-        <result column="remark" property="remark"/>
-        <result column="attention" property="attention"/>
-        <result column="img" property="img"/>
-        <collection property="checkGroups" ofType="checkgroup"
-                    select="com.itheima.dao.GroupMapper.findById"
-                    column="id"></collection>
-    </resultMap>-->
-
-     <!--第二种查询方式多表之间-->
-     <resultMap id="setmealMap" type="setmeal">
+    <!-- <resultMap id="findByResultMap" type="setmeal">
          <id property="id" column="id"></id>
          <result column="name" property="name"></result>
          <result column="code" property="code"/>
@@ -120,15 +103,32 @@
          <result column="remark" property="remark"/>
          <result column="attention" property="attention"/>
          <result column="img" property="img"/>
-         <collection property="checkGroups" ofType="checkgroup">
-             <result column="cpName" property="name"></result>
-             <result column="cpRemark" property="remark"/>
-             <collection property="checkItems" ofType="checkitem">
-                 <result column="ciName" property="name"/>
-             </collection>
-         </collection>
-     </resultMap>
-     <select id="findAllById" resultMap="setmealMap" parameterType="int">
+         <collection property="checkGroups" ofType="checkgroup"
+                     select="com.itheima.dao.GroupMapper.findById"
+                     column="id"></collection>
+     </resultMap>-->
+
+    <!--第二种查询方式多表之间-->
+    <resultMap id="setmealMap" type="setmeal">
+        <id property="id" column="id"></id>
+        <result column="name" property="name"></result>
+        <result column="code" property="code"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="price" property="price"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+        <result column="img" property="img"/>
+        <collection property="checkGroups" ofType="checkgroup">
+            <result column="cpName" property="name"></result>
+            <result column="cpRemark" property="remark"/>
+            <collection property="checkItems" ofType="checkitem">
+                <result column="ciName" property="name"/>
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="findAllById" resultMap="setmealMap" parameterType="int">
          SELECT
              sm.id,
              sm.name,
@@ -153,6 +153,16 @@
     <!--根据套餐的id单表查询套餐的基本信息-->
     <select id="findBySetmealId" resultType="setmeal" parameterType="int">
         select * from t_setmeal where id=#{id}
+    </select>
+
+    <!--套餐预约占比饼形图-->
+    <select id="getSetmealReport" resultType="map">
+        SELECT
+            COUNT(o.`id`) value,
+            (SELECT NAME FROM t_setmeal s WHERE s.id = o.`setmeal_id`) name
+        FROM
+            t_order o
+        GROUP BY o.`setmeal_id`
     </select>
 </mapper>
 

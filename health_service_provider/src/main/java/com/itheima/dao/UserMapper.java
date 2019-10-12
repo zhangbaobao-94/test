@@ -1,12 +1,14 @@
 package com.itheima.dao;
 
-import com.itheima.domain.pojo.Person;
-import org.apache.ibatis.annotations.Select;
-
-import java.util.List;
+import com.itheima.domain.pojo.User;
 
 public interface UserMapper {
-    //查询所有的对象
-    @Select("select * from person")
-    List<Person> findAll();
+
+
+    /**
+     * 根据用户名查询对象
+     * @param username
+     * @return
+     */
+    User findByUsername(String username);
 }

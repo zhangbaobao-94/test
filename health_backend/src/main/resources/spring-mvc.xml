@@ -29,7 +29,7 @@ http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubb
     <!--指定服务注册中心地址-->
     <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
     <!--批量扫描-->
-    <dubbo:annotation package="com.itheima.controller"/>
+    <dubbo:annotation package="com.itheima"/>
     <!--超时设置-->
     <dubbo:consumer timeout="600000" check="false"/>
     <!--文件上传组件-->
@@ -41,4 +41,6 @@ http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubb
 
     <!--加载spring-redis.xml文件-->
     <import resource="classpath:spring-redis.xml"/>
+    <!--加载spring-security.xml文件-->
+    <import resource="spring-security.xml"/>
 </beans>

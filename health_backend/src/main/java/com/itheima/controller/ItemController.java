@@ -7,6 +7,7 @@ import com.itheima.domain.enity.QueryPageBean;
 import com.itheima.domain.enity.Result;
 import com.itheima.domain.pojo.CheckItem;
 import com.itheima.service.ItemService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,7 @@ public class ItemController {
 
     //添加数据
     @RequestMapping("/add")
+    @PreAuthorize("hasAuthority('CHECKITEM_ADD')")
     public Result add(@RequestBody CheckItem checkItem) {
         try {
             itemService.add(checkItem);
@@ -33,12 +35,14 @@ public class ItemController {
 
     //按照条件进行分页查询
     @RequestMapping("/findByCondition")
+    @PreAuthorize("hasAuthority('CHECKITEM_QUERY')")
     public PageResult findByCondition(@RequestBody QueryPageBean queryPageBean) {
         return itemService.findByCondition(queryPageBean);
     }
 
     //根据id删除对象
     @RequestMapping("/deleteById")
+    @PreAuthorize("hasAuthority('CHECKITEM_DELETE')")
     public Result deleteById(Integer id) {
         try {
             itemService.deleteById(id);

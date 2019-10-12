@@ -15,4 +15,11 @@ public interface MemberMapper {
      * @param member_register
      */
     void add(Member member_register);
+
+    /**
+     * 获取每个月的会员数
+     * @param date
+     * @return
+     */
+    Integer getMemberReport(String date);
 }

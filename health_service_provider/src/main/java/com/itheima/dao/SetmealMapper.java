@@ -87,4 +87,10 @@ public interface SetmealMapper {
      * @return
      */
     Setmeal findBySetmealId(Integer id);
+
+    /**
+     * 套餐预约占比饼形图
+     * @return
+     */
+    List<Map<String, Object>> getSetmealReport();
 }

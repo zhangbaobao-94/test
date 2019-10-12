@@ -16,4 +16,8 @@
         select * from t_member where phoneNumber=#{phoneNumber}
     </select>
 
+    <select id="getMemberReport" resultType="int" parameterType="string">
+        select count(id) from t_member where regTime &lt;=#{value}
+    </select>
+
 </mapper>

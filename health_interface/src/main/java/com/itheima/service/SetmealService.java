@@ -61,4 +61,10 @@ public interface SetmealService {
      * @return
      */
     Setmeal findBySetmealId(Integer id);
+
+    /**
+     * 套餐预约占比饼形图
+     * @return
+     */
+    Map getSetmealReport();
 }

@@ -118,6 +118,7 @@ public class SetmealServiceImpl implements SetmealService {
 
     /**
      * 查询所有的检查套餐信息
+     *
      * @return
      */
     @Override
@@ -127,6 +128,7 @@ public class SetmealServiceImpl implements SetmealService {
 
     /**
      * 多表查询,根据套餐id查询检查组,检查项
+     *
      * @param id
      * @return
      */
@@ -137,12 +139,32 @@ public class SetmealServiceImpl implements SetmealService {
 
     /**
      * 根据套餐的id单表查询套餐的基本信息
+     *
      * @param id
      * @return
      */
     @Override
     public Setmeal findBySetmealId(Integer id) {
         return setmealMapper.findBySetmealId(id);
+    }
+
+    /**
+     * 套餐预约占比饼形图
+     *
+     * @return
+     */
+    @Override
+    public Map getSetmealReport() {
+        Map map = new HashMap();
+        List<String> setmealNames = new ArrayList<>();
+        List<Map<String, Object>> setmealCountList = setmealMapper.getSetmealReport();
+        for (Map<String, Object> stringObjectMap : setmealCountList) {
+            String value = (String) stringObjectMap.get("name");
+            setmealNames.add(value);
+        }
+        map.put("setmealNames", setmealNames);
+        map.put("setmealCount", setmealCountList);
+        return map;
     }
 
     /**
