@@ -23,6 +23,9 @@
                         </div>
                       </div>
                       <div>
+                        {{errorMessage}}
+                      </div>
+                      <div>
                         <span class="svg-container svg-container_login">
                           <span class="user"></span>
                         </span>
@@ -43,4 +46,29 @@
     <!-- 引入组件库 -->
     <script src="js/vue.js"></script>
     <script src="plugins/elementui/index.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/axios-0.18.0.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data:{
+            errorMessage:null
+        },
+        created() {
+            //获取地址栏信息
+            var url = window.location.search;
+            var pararm = url.substring(1);
+            var strings = pararm.split("&");
+            for (var i = 0; i < strings.length; i++) {
+                var str = strings[i].split("=");
+                if (str[0] =="error" && str[1] == "true") {
+                    //判断此页面为登录错误后跳转的登录页面,发送异步请求,在后台的session域中获取错误信息
+                    axios.post("/user/getErrorMessage.do").then((res)=>{
+                        this.errorMessage = res.data;
+                    })
+                }
+            }
+        }
+    });
+</script>
 </html>

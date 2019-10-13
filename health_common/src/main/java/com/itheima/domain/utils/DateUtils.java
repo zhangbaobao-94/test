@@ -82,7 +82,7 @@ public class DateUtils {
         if (1 == dayWeek) {
             cal.add(Calendar.DAY_OF_MONTH, -1);
         }
-        // 设置一个星期的第一天，按中国的习惯一个星期的第一天是星期一
+        // 设置一个星期的第一天，按中国的习惯一个星期的第一天是星期 一
         cal.setFirstDayOfWeek(Calendar.MONDAY);
         // 获得当前日期是一个星期的第几天
         int day = cal.get(Calendar.DAY_OF_WEEK);

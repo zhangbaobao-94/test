@@ -22,6 +22,7 @@
     <security:http security="none" pattern="/img/**"/>
     <security:http security="none" pattern="/js/**"/>
     <security:http security="none" pattern="/plugins/**"/>
+    <security:http security="none" pattern="/user/getErrorMessage.do"/>
 
 
     <security:http auto-config="true" use-expressions="true">
@@ -41,7 +42,8 @@
                 password-parameter="password"
                 login-processing-url="/login.do"
                 default-target-url="/pages/main.html"
-                authentication-failure-url="/login.html"></security:form-login>
+                always-use-default-target="true"
+                authentication-failure-url="/login.html?error=true"></security:form-login>
 
         <security:logout logout-url="/logout.do"
                          logout-success-url="/login.html" invalidate-session="true"/>
@@ -69,5 +71,13 @@
 
     <!--开启注解扫描-->
     <security:global-method-security pre-post-annotations="enabled"/>
+
+    <!--    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">-->
+    <!--        <property name="basenames" value="classpath:org/springframework/security/messages_zh_CN"/>-->
+
+    <!--    </bean>-->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames" value="classpath:messages_zh_CN"/>
+    </bean>
 
 </beans>

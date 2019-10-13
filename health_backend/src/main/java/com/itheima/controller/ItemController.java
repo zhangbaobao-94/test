@@ -55,6 +55,7 @@ public class ItemController {
 
     //通过id进行查询
     @RequestMapping("/findById")
+    @PreAuthorize("hasAutority('CHECKITEM_EDIT')")
     public Result findById(Integer id) {
         try {
             CheckItem checkItem = itemService.findById(id);

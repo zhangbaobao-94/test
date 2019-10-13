@@ -20,4 +20,24 @@
         select count(id) from t_member where regTime &lt;=#{value}
     </select>
 
+    <!--当天新增会员数-->
+    <select id="todayAdd" resultType="int">
+        select count(id) from t_member where regTime=curDate()
+    </select>
+
+    <!--本周新增会员数-->
+    <select id="weekAdd" resultType="int" parameterType="string">
+        select count(id) from t_member where regTime &gt;=#{value}
+    </select>
+
+    <!--总会员数-->
+    <select id="countMember" resultType="int">
+        select count(id) from t_member
+    </select>
+
+    <!--本月新增会员数-->
+    <select id="monthAdd" resultType="int">
+        SELECT COUNT(id) FROM t_member WHERE regTime &gt;= DATE_FORMAT(CURDATE(),'%Y-%m-1');
+    </select>
+
 </mapper>

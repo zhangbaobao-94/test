@@ -7,6 +7,7 @@ import com.itheima.domain.enity.QueryPageBean;
 import com.itheima.domain.enity.Result;
 import com.itheima.domain.pojo.CheckGroup;
 import com.itheima.service.GroupService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,7 @@ public class GroupController {
 
     //添加检查组
     @RequestMapping("/add")
+    @PreAuthorize("hasAuthority('CHECKGROUP_ADD')")
     public Result add(@RequestBody CheckGroup checkGroup, Integer[] checkitemIds) {
         try {
             groupService.add(checkGroup, checkitemIds);
@@ -35,6 +37,7 @@ public class GroupController {
 
     //分页条件查询
     @RequestMapping("/page")
+    @PreAuthorize("hasAuthority('CHECKGROUP_QUERY')")
     public PageResult page(@RequestBody QueryPageBean queryPageBean) {
         return groupService.page(queryPageBean);
     }
@@ -46,6 +49,7 @@ public class GroupController {
      * @return
      */
     @RequestMapping("/findById")
+    @PreAuthorize("hasAuthority('CHECKGROUP_EDIT')")
     public Result findById(Integer id) {
         try {
             Map<String, Object> map = groupService.findById(id);
@@ -96,6 +100,7 @@ public class GroupController {
      * @return
      */
     @RequestMapping("/delete")
+    @PreAuthorize("hasAuthority('CHECKGROUP_DELETE')")
     public Result delete(Integer id) {
         try {
             groupService.delete(id);

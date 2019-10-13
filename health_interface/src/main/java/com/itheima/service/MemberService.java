@@ -26,5 +26,9 @@ public interface MemberService {
      */
     Map<String, Object> getMemberReport();
 
-
+    /**
+     * 运营数据统计
+     * @return
+     */
+    Map<String, Object> getBusinessReportData() throws Exception;
 }

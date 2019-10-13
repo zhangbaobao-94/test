@@ -25,11 +25,15 @@
 
     <!--条件查询-->
     <select id="findByName" parameterType="string" resultType="checkgroup">
-        select * from t_checkgroup
+        SELECT
+           *
+        FROM
+            t_checkgroup
         <if test="value!=null and value.length>0">
             where code=#{value} or name=#{value} or helpCode=#{value}
         </if>
     </select>
+
 
     <!--通过id查询对象-->
     <select id="findCheckGroupById" parameterType="int" resultType="checkgroup">
@@ -87,13 +91,7 @@
         select * from t_checkgroup where id in (select checkgroup_id from t_setmeal_checkgroup where setmeal_id=#{id})
     </select>
     <resultMap id="findGroupById" type="checkgroup">
-        <id column="id" property="id"/>
-        <result column="code" property="code"/>
         <result column="name" property="name"/>
-        <result column="helpCode" property="helpCode"/>
-        <result column="sex" property="sex"/>
-        <result column="remark" property="remark"/>
-        <result column="attention" property="attention"/>
         <collection property="checkItems" ofType="checkitem"
                     select="com.itheima.dao.ItemMapper.findByGroupId"
                     column="id"/>

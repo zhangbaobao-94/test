@@ -28,4 +28,49 @@
         where id=#{id}
     </select>
 
+    <!--今日预约人数-->
+    <select id="todayOrder" resultType="int">
+        SELECT COUNT(id) FROM t_order WHERE orderDate=CURDATE();
+    </select>
+
+    <!--本周预约人数-->
+    <select id="weekOrder" resultType="int" parameterType="string">
+        SELECT COUNT(id) FROM t_order WHERE orderDate>=#{date};
+    </select>
+
+    <!--本月预约人数-->
+    <select id="monthOrder" resultType="int">
+        SELECT COUNT(id) FROM t_order WHERE orderDate>=DATE_FORMAT(CURDATE(),'%Y-%m-1');
+    </select>
+
+    <!--今日到诊人数-->
+    <select id="orderStatus" resultType="int">
+        SELECT COUNT(id) FROM t_order WHERE orderStatus='已到诊' AND orderDate=CURDATE()
+    </select>
+
+    <!--本周到诊人数-->
+    <select id="weekStatus" resultType="int" parameterType="string">
+        SELECT COUNT(id) FROM t_order WHERE orderStatus='已到诊' AND orderDate>=#{value};
+    </select>
+
+    <!--本月到诊人数-->
+    <select id="monthStatus" resultType="int">
+        SELECT COUNT(id) FROM t_order WHERE orderStatus='已到诊' AND orderDate>=DATE_FORMAT(CURDATE(),'%Y-%m-1');
+    </select>
+
+    <!--热门套餐-->
+    <select id="getHotSetmeal" resultType="map">
+        SELECT
+            COUNT(o.`id`) setmeal_count,
+            (SELECT NAME FROM t_setmeal s WHERE  o.setmeal_id=s.id) name,
+            COUNT(o.`id`)/(SELECT COUNT(o.id) FROM t_order o) proportion
+        FROM
+            t_order o
+        GROUP BY
+            o.`setmeal_id`
+        ORDER BY
+            COUNT(o.id) DESC
+        LIMIT
+            0,4;
+    </select>
 </mapper>

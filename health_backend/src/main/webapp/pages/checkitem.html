@@ -44,11 +44,6 @@
                 <el-table-column type="index" align="center" label="序号"></el-table-column>
                 <el-table-column prop="code" label="项目编码" align="center"></el-table-column>
                 <el-table-column prop="name" label="项目名称" align="center"></el-table-column>
-
-
-                <el-table-column prop="id" label="" align="center"></el-table-column>
-
-
                 <el-table-column label="适用性别" align="center">
                     <template slot-scope="scope">
                         <span>{{ scope.row.sex == '0' ? '不限' : scope.row.sex == '1' ? '男' : '女'}}</span>
@@ -366,6 +361,12 @@
                             this.$message.error(res.data.message);
                         }
                         this.findPage();
+                    }).catch((res)=>{
+                        if (res == ("Error: Request failed with status code 403")) {
+                            this.$message.warning("您无权限进行此项操作!");
+                        } else {
+                            this.$message.error("网络繁忙,请联系管理员");
+                        }
                     })
                 }).catch(() => {
                     this.$message.info('操作已取消');
