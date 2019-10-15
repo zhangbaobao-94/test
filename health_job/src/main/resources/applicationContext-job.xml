@@ -4,25 +4,46 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-<!--    &lt;!&ndash;包扫描 可以替代下面两行&ndash;&gt;-->
-<!--    <context:component-scan base-package="com.itheima.Jobs"/>-->
+    <!--    &lt;!&ndash;包扫描 可以替代下面两行&ndash;&gt;-->
+    <!--    <context:component-scan base-package="com.itheima.Jobs"/>-->
 
     <context:annotation-config></context:annotation-config>
     <bean id="clearImgJob" class="com.itheima.Jobs.ClearImgJob"></bean>
-
+    <!--定时删除七牛云图片-->
     <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <!-- 注入目标对象 -->
         <property name="targetObject" ref="clearImgJob"/>
         <!-- 注入目标方法 -->
         <property name="targetMethod" value="clearImg"/>
+
     </bean>
+
     <!-- 注册一个触发器，指定任务触发的时间 -->
     <bean id="myTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <!-- 注入JobDetail -->
         <property name="jobDetail" ref="jobDetail"/>
         <!-- 指定触发的时间，基于Cron表达式 -->
         <property name="cronExpression">
-           <!-- <value>0 0 2 * * ?</value>-->
+            <!-- <value>0 0 2 * * ?</value>-->
+            <value>0/5 * * * * ?</value>
+        </property>
+    </bean>
+
+    <!--定时删除t_ordersetting表中的数据-->
+    <bean id="jobDetail1" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 注入目标对象 -->
+        <property name="targetObject" ref="clearImgJob"/>
+        <!-- 注入目标方法 -->
+        <property name="targetMethod" value="clearExcel"/>
+
+    </bean>
+    <!-- 注册一个触发器，指定任务触发的时间 -->
+    <bean id="myTrigger2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 注入JobDetail -->
+        <property name="jobDetail" ref="jobDetail1"/>
+        <!-- 指定触发的时间，基于Cron表达式 -->
+        <property name="cronExpression">
+            <!-- <value>0 0 2 * * ?</value>-->
             <value>0/5 * * * * ?</value>
         </property>
     </bean>
@@ -32,6 +53,7 @@
         <property name="triggers">
             <list>
                 <ref bean="myTrigger"/>
+                <ref bean="myTrigger2"/>
             </list>
         </property>
     </bean>

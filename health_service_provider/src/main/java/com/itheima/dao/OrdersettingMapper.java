@@ -44,4 +44,10 @@ public interface OrdersettingMapper {
      * @param orderSetting
      */
     void updateReservations(OrderSetting orderSetting);
+
+    /**
+     * 定时清理之前的预约文件
+     * @param today
+     */
+    void deleteByOrderDate(Date today);
 }

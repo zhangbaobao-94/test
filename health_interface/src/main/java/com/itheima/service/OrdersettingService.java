@@ -2,7 +2,6 @@ package com.itheima.service;
 
 import com.itheima.domain.pojo.OrderSetting;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,5 +26,9 @@ public interface OrdersettingService {
      */
     void editNumberByDate(OrderSetting orderSetting);
 
-
+    /**
+     * 定时清理之前设置的预约人数
+     * @param today
+     */
+    void deleteByOrderDate(String today) throws Exception;
 }

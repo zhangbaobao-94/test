@@ -3,14 +3,12 @@ package com.itheima.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.itheima.dao.OrdersettingMapper;
 import com.itheima.domain.pojo.OrderSetting;
+import com.itheima.domain.utils.DateUtils;
 import com.itheima.service.OrdersettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service(interfaceClass = OrdersettingService.class)
 @Transactional
@@ -72,5 +70,15 @@ public class OrdersettingServiceImpl implements OrdersettingService{
         } else {
             ordersettingMapper.insert(orderSetting);
         }
+    }
+
+    /**
+     * 定时清理之前的设置数据
+     * @param today
+     */
+    @Override
+    public void deleteByOrderDate(String today) throws Exception{
+        Date date = DateUtils.parseString2Date(today);
+        ordersettingMapper.deleteByOrderDate(date);
     }
 }
