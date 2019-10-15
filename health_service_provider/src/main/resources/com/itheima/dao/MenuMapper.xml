@@ -1,0 +1,33 @@
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.MenuMapper">
+    <select id="findMenu" parameterType="string" resultMap="findChildrenMenu">
+        SELECT
+            m.id,
+            m.`path`,
+            m.`name`,
+            m.`icon`,
+            m.`linkUrl`
+        FROM
+            t_user u
+        INNER JOIN t_user_role ur ON u.`id`=ur.`user_id`
+        INNER JOIN t_role r ON ur.`role_id`=r.`id`
+        INNER JOIN t_role_menu rm ON r.`id`=rm.`role_id`
+        INNER JOIN t_menu m ON rm.`menu_id`=m.`id`
+        WHERE u.`username`=#{value} and m.`level`=1;
+    </select>
+
+    <resultMap id="findChildrenMenu" type="menu">
+        <id column="id" property="id"/>
+        <result column="path" property="path"/>
+        <result column="name" property="name"/>
+        <result column="linkUrl" property="linkUrl"/>
+        <collection property="children" ofType="menu" column="id"
+                    select="com.itheima.dao.MenuMapper.findParentMenuId">
+        </collection>
+    </resultMap>
+
+    <select id="findParentMenuId" parameterType="int" resultType="menu">
+        select * from t_menu where parentMenuId=#{parentMenuId} and level=2;
+    </select>
+</mapper>

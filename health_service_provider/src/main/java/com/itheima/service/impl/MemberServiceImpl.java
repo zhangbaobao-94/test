@@ -1,6 +1,7 @@
 package com.itheima.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
 import com.itheima.dao.MemberMapper;
 import com.itheima.dao.OrderMapper;
 import com.itheima.domain.pojo.Member;
@@ -9,6 +10,8 @@ import com.itheima.domain.utils.MD5Utils;
 import com.itheima.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -20,6 +23,8 @@ public class MemberServiceImpl implements MemberService {
     private MemberMapper memberMapper;
     @Autowired
     private OrderMapper orderMapper;
+    @Autowired
+    private JedisPool jedisPool;
 
     /**
      * 根据手机号查询对象
@@ -122,6 +127,9 @@ public class MemberServiceImpl implements MemberService {
         reportData.put("thisMonthOrderNumber", thisMonthOrderNumber);
         reportData.put("thisMonthVisitsNumber", thisMonthVisitNumber);
         reportData.put("hotSetmeal", hotSetmeal);
+        //把map转为json字符串存储到Jedis中,持续时间为30天
+        Jedis jedis = jedisPool.getResource();
+        jedis.setex("reportData", 30*24*60*60, JSON.toJSON(reportData).toString());
         return reportData;
     }
 
